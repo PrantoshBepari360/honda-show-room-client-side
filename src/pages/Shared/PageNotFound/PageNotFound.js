@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -10,8 +11,8 @@ const PageNotFound = () => {
         alt=""
       />
       <br />
-      <Link to="/">
-        <button class="btn btn-primary">Go Back</button>
+      <Link style={{ textDecoration: "none"}} to="/">
+      <Button style={{py: 3}} variant="contained">Go Back</Button>
       </Link>
     </div>
   );
