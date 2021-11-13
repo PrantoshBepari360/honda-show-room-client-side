@@ -1,0 +1,20 @@
+.add-product form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-product form input,
+textarea {
+  width: 50%;
+  margin-bottom: 15px;
+  padding: 7px;
+  font-size: 20px;
+}
+
+.submit-btn {
+  width: 30%;
+  margin: 0 auto;
+  font-size: 18px;
+}

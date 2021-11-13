@@ -1,0 +1,26 @@
+.honda-form {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.honda {
+  margin-top: 50px;
+}
+
+.honda-form input {
+  display: block;
+  margin-bottom: 30px;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid #808080;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.submit {
+  width: 50%;
+}
+
+.error {
+  color: #ff0000;
+}
