@@ -1,8 +1,8 @@
 # Yamaha Honda show-room
 
-In the project directory client side privet repo link [Yamaha Honda show-room](https://github.com/programming-hero-web-course-4/niche-website-client-side-PrantoshBepari360)
+In the project directory client side privet repo link [Yamaha Honda show-room](https://github.com/PrantoshBepari360/honda-show-room-client-side)
 
-In the project directory server side privet repo link [Yamaha Honda show-room](https://github.com/programming-hero-web-course-4/niche-website-server-side-PrantoshBepari360)
+In the project directory server side privet repo link [Yamaha Honda show-room](https://github.com/PrantoshBepari360/honda-show-room-sarver-side)
 
 In the project directory live side link [Yamaha Honda show-room live site](https://motor-bick.firebaseapp.com/)
 
