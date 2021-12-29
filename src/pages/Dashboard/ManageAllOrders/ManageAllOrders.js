@@ -1,11 +1,12 @@
 import {
   Button,
-  Card,
-  CardContent,
   CircularProgress,
-  Container,
-  Grid,
-  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Box } from "@mui/system";
@@ -46,48 +47,44 @@ const ManageAllOrders = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <h1>All Orders</h1>
-      <Container>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {orders.map((order) => (
-            <Grid key={order._id} item xs={4} sm={4} md={4}>
-              <Card sx={{ minWidth: 230, marginTop: "20px" }}>
-                <CardContent>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Name: {order.name}
-                  </Typography>
-                  <Typography variant="h6" component="div">
-                    Email: {order.email}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    City: {order.city}
-                  </Typography>
-                  <Typography variant="h6">Address: {order.address}</Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    Phone: {order.phone}
-                  </Typography>
-                  <Typography variant="h6">Time: {order.createdAt}</Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    Order Id : {order._id}
-                  </Typography>
-                  <br />
-                  <Button
+      <h1>Manage all Orders</h1>
+      <TableContainer>
+        <Table sx={{}} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Products Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell align="right">Delate</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow
+                key={order._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {order.name}
+                </TableCell>
+                <TableCell>{order.email}</TableCell>
+                <TableCell>{order.products}</TableCell>
+                <TableCell>$ {order.price}</TableCell>
+                <TableCell align="right">
+                <Button
                     variant="outlined"
                     startIcon={<DeleteIcon />}
                     onClick={() => handelDelete(order._id)}
                   >
                     Delete
                   </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

@@ -6,11 +6,26 @@ import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import "./BookNow.css";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const BookNow = () => {
+  const { Id } = useParams();
+  console.log(Id)
   const location = useLocation();
   const history = useHistory();
   const redirect_uri = location.state?.from || "/home";
+
+  const [products, setProducts] = useState([]);
+  console.log(products)
+
+
+  useEffect(() => {
+    fetch(`https://safe-earth-63565.herokuapp.com/products/${Id}`)
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, [Id]);
 
   const {
     register,
@@ -20,7 +35,8 @@ const BookNow = () => {
   } = useForm();
 
   const { user } = useAuth();
-  const onSubmit = (data) => {
+  
+  const Submit = (data) => {
     fetch("https://safe-earth-63565.herokuapp.com/orders", {
       method: "POST",
       headers: {
@@ -40,7 +56,7 @@ const BookNow = () => {
 
   return (
     <div>
-      <form className="honda-form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="honda-form" onSubmit={handleSubmit(Submit)}>
         <Box className="honda">
           <input defaultValue={user.displayName} {...register("name")} />
           <input
@@ -50,7 +66,8 @@ const BookNow = () => {
           {errors.email && (
             <span className="error">This field is required</span>
           )}
-          <input placeholder="City" defaultValue="" {...register("city")} />
+          <input placeholder="name" defaultValue={products.name} {...register("products")} />
+          <input placeholder="price" defaultValue={products.price} {...register("price")} />
           <input
             placeholder="Address"
             defaultValue=""

@@ -36,7 +36,7 @@ function App() {
             <PrivetRoute path="/dashboard">
               <Dashboard></Dashboard>
             </PrivetRoute>
-            <PrivetRoute path="/booking">
+            <PrivetRoute path="/booking/:Id">
               <BookNow></BookNow>
             </PrivetRoute>
             <Route path="/login">

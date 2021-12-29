@@ -1,16 +1,19 @@
 import {
-  Button,
-  Card,
-  CardContent,
   CircularProgress,
-  Container,
-  Grid,
-  Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Button,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 const MyOrders = () => {
@@ -48,46 +51,54 @@ const MyOrders = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <h2>My Orders</h2>
-      <Container>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {orders.map((order) => (
-            <Grid item xs={4} sm={4} md={4}>
-              <Card sx={{ minWidth: 230, marginTop: "20px" }}>
-                <CardContent>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    Name: {order.name}
-                  </Typography>
-                  <Typography variant="h6" component="div">
-                    Email: {order.email}
-                  </Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    City: {order.city}
-                  </Typography>
-                  <Typography variant="h6">Address: {order.address}</Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    Phone: {order.phone}
-                  </Typography>
-                  <Typography variant="h6">Time: {order.createdAt}</Typography>
-                  <Typography variant="h6" color="text.secondary">
-                    Order Id :{order._id}
-                  </Typography>
-                  <br />
-                  <Button
-                    variant="contained"
+      <TableContainer component={Paper}>
+        <Table sx={{}} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Products Name</TableCell>
+              <TableCell>Price</TableCell>
+              <TableCell >Pay</TableCell>
+              <TableCell>Cancel</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orders.map((order) => (
+              <TableRow
+                key={order._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {order.name}
+                </TableCell>
+                <TableCell>{order.email}</TableCell>
+                <TableCell>{order.products}</TableCell>
+                <TableCell>$ {order.price}</TableCell>
+                
+                <TableCell >
+                  {order.payment ? (
+                    "paid"
+                  ) : (
+                    <Link to={`/dashboard/payment/${order._id}`}>
+                      <button>Pay</button>
+                    </Link>
+                  )}
+                </TableCell>
+                <TableCell>
+                {order.payment ? (
+                  ""
+                   ) : (<Button
                     onClick={() => handelDelete(order._id)}
                   >
-                    Delate
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+                    Cancel
+                  </Button>)}
+                  </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 };

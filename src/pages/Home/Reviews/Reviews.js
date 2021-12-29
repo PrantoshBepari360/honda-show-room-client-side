@@ -53,7 +53,7 @@ const Reviews = () => {
                     style={{ textDecoration: "none" }}
                     to={`/details/${review._id}`}
                   >
-                    <Button variant="contained">Details</Button>
+                    <Button variant="contained">By Now</Button>
                   </NavLink>
                 </CardContent>
               </Card>

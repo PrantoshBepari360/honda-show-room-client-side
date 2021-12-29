@@ -21,8 +21,7 @@ const ReviewDetails = () => {
   }, [id]);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1>Details</h1>
+    <Box sx={{ flexGrow: 1 , marginTop: "5%"}}>
       <Container>
         <Card>
           <CardContent>

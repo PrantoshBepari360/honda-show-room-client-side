@@ -52,7 +52,7 @@ const Products = () => {
                   <NavLink
                     style={{ textDecoration: "none" }}
                     to={`/booking/${product._id}`}
-                  >
+                    >
                     <Button variant="contained">By Now</Button>
                   </NavLink>
                 </CardContent>

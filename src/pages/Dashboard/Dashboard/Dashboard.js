@@ -14,12 +14,12 @@ import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import MyOrder from "../MyOrders/MyOrders";
 import Review from "../Review/Review";
-import Pay from "../Pay/Pay";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import AddProduct from "../AddProduct/AddProduct";
 import ManageProduct from "../ManageProduct/ManageProduct";
 import ManageAllOrders from "../ManageAllOrders/ManageAllOrders";
 import AdminRoute from "../../Login/AdminRoute/AdminRoute";
+import Payment from "../Payment/Payment";
 
 const drawerWidth = 200;
 
@@ -46,19 +46,13 @@ function Dashboard(props) {
       <br />
       <Link style={{ textDecoration: "none" }} to={`${url}`}>
         <Button color="inherit" style={{ marginBottom: "10px", color: "gray" }}>
-          Review
-        </Button>
-      </Link>
-      <br />
-      <Link style={{ textDecoration: "none" }} to={`${url}/myorder`}>
-        <Button color="inherit" style={{ marginBottom: "10px", color: "gray" }}>
           My Orders
         </Button>
       </Link>
       <br />
-      <Link style={{ textDecoration: "none" }} to={`${url}/pay`}>
+      <Link style={{ textDecoration: "none" }} to={`${url}/review`}>
         <Button color="inherit" style={{ marginBottom: "10px", color: "gray" }}>
-          Pay
+        Review 
         </Button>
       </Link>
       <br />
@@ -183,13 +177,13 @@ function Dashboard(props) {
 
         <Switch>
           <Route exact path={path}>
-            <Review></Review>
-          </Route>
-          <Route path={`${path}/myOrder`}>
             <MyOrder></MyOrder>
           </Route>
-          <Route path={`${path}/pay`}>
-            <Pay></Pay>
+          <Route path={`${path}/review`}>
+            <Review></Review>
+          </Route>
+          <Route path={`${path}/payment/:paymentId`}>
+            <Payment></Payment>
           </Route>
           <AdminRoute path={`${path}/makeAdmin`}>
             <MakeAdmin></MakeAdmin>
