@@ -9,8 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard/Dashboard";
 import PrivetRoute from "./pages/Login/PrivetRoute/PrivetRoute";
 import PageNotFound from "./pages/Shared/PageNotFound/PageNotFound";
 import BookNow from "./pages/Explore/BookNow/BookNow";
-import Products from "./pages/Home/Products/Products";
-import ReviewDetails from "./pages/Home/ReviewDetails/ReviewDetails";
+import Product from "./pages/Home/Products/Product";
 
 function App() {
   return (
@@ -25,10 +24,7 @@ function App() {
               <Home></Home>
             </Route>
             <Route path="/product">
-              <Products></Products>
-            </Route>
-            <Route path="/details/:id">
-              <ReviewDetails></ReviewDetails>
+              <Product></Product>
             </Route>
             <Route path="/explore">
               <Explores></Explores>

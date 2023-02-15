@@ -1,45 +1,102 @@
-import { Button } from "@mui/material";
-import axios from "axios";
 import React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import SendIcon from "@mui/icons-material/Send";
-import "./AddProduct.css";
+import axios from "axios";
+import { Col, Form, Row, Button } from "react-bootstrap";
 
 const AddProduct = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const [success, setSuccess] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     axios
-      .post("https://safe-earth-63565.herokuapp.com/products", data)
+      .post("https://honda-show-room.onrender.com/products", data)
       .then((res) => {
         if (res.data.insertedId) {
-          alert("Added successfully");
+          setSuccess(true);
           reset();
         }
       });
   };
-
   return (
-    <div className="add-product">
-      <h1>Add Product</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("name", { required: true, maxLength: 20 })}
-          placeholder="Name"
-        />
-        <textarea {...register("description")} placeholder="Description" />
-        <input type="number" {...register("price")} placeholder="Price" />
-        <input {...register("img")} placeholder="Image Url" />
-        <Button
-          className="submit-btn"
-          type="submit"
-          variant="contained"
-          endIcon={<SendIcon />}
-        >
-          Submit
-        </Button>
-      </form>
+    <div>
+      <h1 className="text-center">Add Product</h1>
+      <div className="add-product">
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Row className="mb-3 mb-4">
+            <Form.Group as={Col} controlId="RoomTitle">
+              <div style={{ textAlign: "left" }}>
+                <Form.Label>
+                  <b>Title</b>
+                </Form.Label>
+              </div>
+              <input
+                type="text"
+                placeholder="Product Name"
+                {...register("title", { required: true })}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="Description">
+              <div style={{ textAlign: "left" }}>
+                <Form.Label>
+                  <b>Price</b>
+                </Form.Label>
+              </div>
+              <input
+                type="text"
+                placeholder="Price"
+                {...register("cost", { required: true })}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3 mb-4">
+            <Form.Group as={Col} controlId="RoomSize">
+              <div style={{ textAlign: "left" }}>
+                <Form.Label>
+                  <b>Image URL</b>
+                </Form.Label>
+              </div>
+              <input
+                type="text"
+                placeholder="Image URL"
+                {...register("image", { required: true })}
+              />
+            </Form.Group>
+          </Row>
+          <Row className="mb-3 mb-4">
+            <Form.Group as={Col} controlId="Description">
+              <div style={{ textAlign: "left" }}>
+                <Form.Label>
+                  <b>Description</b>
+                </Form.Label>
+              </div>
+              <textarea
+                style={{ height: "100px" }}
+                type="text"
+                placeholder="Description"
+                {...register("description", { required: true })}
+              />
+            </Form.Group>
+          </Row>
+          {success && (
+            <div className="alert alert-success" role="alert">
+              Added Tour Place Successfully!
+            </div>
+          )}
+          {errors.exampleRequired && <span>This field is required</span>}
+          <div style={{ textAlign: "left" }}>
+            <Button className="fw-bold" variant="primary" type="submit">
+              Add Place
+            </Button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };

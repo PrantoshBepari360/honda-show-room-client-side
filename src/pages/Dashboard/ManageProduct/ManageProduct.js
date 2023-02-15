@@ -1,28 +1,17 @@
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
 
 const ManageProduct = () => {
   const [products, setProducts] = useState([]);
-  console.log(products)
 
   useEffect(() => {
-    fetch("https://safe-earth-63565.herokuapp.com/products")
+    fetch("https://honda-show-room.onrender.com/products")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
 
   const handelDelete = (id) => {
-    const url = `https://safe-earth-63565.herokuapp.com/products/${id}`;
+    const url = `https://honda-show-room.onrender.com/products/${id}`;
     fetch(url, {
       method: "DELETE",
     })
@@ -30,55 +19,55 @@ const ManageProduct = () => {
       .then((data) => {
         if (data.deletedCount) {
           alert("seccesfully deleted");
-          const remaining = products.filter((product) => product._id !== id);
+          const remaining = products?.filter((product) => product._id !== id);
           setProducts(remaining);
         }
       });
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1>Manage all Product</h1>
-      <TableContainer>
-        <Table sx={{}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Products Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell align="right">Delate</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map((product) => (
-              <TableRow
-                key={product._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {product.name}
-                </TableCell>
-                <TableCell>$ {product.price}</TableCell>
-                <TableCell style={{ width: "15%"}}><img
-                      style={{ width: "100%"}}
-                      src={product.img}
-                      alt=""
-                    /></TableCell>
-                <TableCell align="right">
-                <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handelDelete(product._id)}
+    <div>
+      <h1 className="text-center mb-4">Manage Products</h1>
+
+      <div style={{ width: "80%", margin: "auto" }}>
+        <Table responsive striped bordered hover>
+          <thead>
+            <tr>
+              <th>Product Photo</th>
+              <th>Product Name</th>
+              <th>Short Description</th>
+              <th>Price</th>
+              <th className="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products?.map((product, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    style={{ width: "100px" }}
+                    src={product?.img}
+                    alt="product"
+                  />
+                </td>
+                <td>{product?.name}</td>
+                <td>{product?.description?.substring(0, 70)}...</td>
+                <td>{product?.price}</td>
+
+                <td className="text-center">
+                  <button
+                    onClick={() => handelDelete(product?._id)}
+                    className="btn text-danger"
                   >
                     Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
+                  </button>
+                </td>
+              </tr>
             ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
-    </Box>
+      </div>
+    </div>
   );
 };
 

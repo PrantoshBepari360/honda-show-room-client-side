@@ -15,14 +15,11 @@ const CheckoutForm = ({ orders }) => {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    fetch(
-      "https://safe-earth-63565.herokuapp.com/create-payment-intent",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ price }),
-      }
-    )
+    fetch("https://honda-show-room.onrender.com/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ price }),
+    })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [price]);
@@ -51,7 +48,6 @@ const CheckoutForm = ({ orders }) => {
     } else {
       setError("");
       setSuccess("your pament processed successfully");
-      console.log(paymentMethod);
     }
 
     // payment intent
@@ -70,7 +66,6 @@ const CheckoutForm = ({ orders }) => {
       setError(intentError.message);
     } else {
       setError("");
-      console.log(paymentIntent);
       setProcessing(false);
 
       // save to database
@@ -78,9 +73,9 @@ const CheckoutForm = ({ orders }) => {
         amount: paymentIntent.amount,
         created: paymentIntent.created,
         last4: paymentMethod.card.last4,
-        transaction: paymentIntent.client_secret.slice('_secret')[0],
+        transaction: paymentIntent.client_secret.slice("_secret")[0],
       };
-      const url = `https://safe-earth-63565.herokuapp.com/orders/${_id}`;
+      const url = `https://honda-show-room.onrender.com/orders/${_id}`;
       fetch(url, {
         method: "PUT",
         headers: {
@@ -88,8 +83,8 @@ const CheckoutForm = ({ orders }) => {
         },
         body: JSON.stringify(payment),
       })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
+        .then(() => {})
+        .then(() => {});
     }
   };
 

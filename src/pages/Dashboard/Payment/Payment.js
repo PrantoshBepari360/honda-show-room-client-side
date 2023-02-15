@@ -10,13 +10,10 @@ const stripePromise = loadStripe(
 
 const Payment = () => {
   const { paymentId } = useParams();
-  console.log(paymentId)
   const [orders, setOrders] = useState({});
 
   useEffect(() => {
-    fetch(
-      `https://safe-earth-63565.herokuapp.com/orders/${paymentId}`
-    )
+    fetch(`https://honda-show-room.onrender.com/orders/${paymentId}`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
   }, [paymentId]);

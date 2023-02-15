@@ -1,65 +1,55 @@
+import { Box, Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Typography,
-} from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
+import Review from "./Review/Review";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("https://safe-earth-63565.herokuapp.com/reviews")
+    const url = `https://honda-show-room.onrender.com/reviews`;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1>Review</h1>
+    <Box>
       <Container>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-        >
-          {reviews.map((review) => (
-            <Grid key={review._id} item xs={4} sm={4} md={4}>
-              <Card sx={{ minWidth: 230, marginTop: "20px" }}>
-                <CardContent>
-                  <Typography variant="h6" color="text.secondary" gutterBottom>
-                    <img
-                      style={{ width: "100%", height: "200px" }}
-                      src={review.img}
-                      alt=""
-                    />
-                  </Typography>
-                  <Typography variant="h5" component="div">
-                    Name: {review.name}
-                  </Typography>
-                  <Typography variant="h5" color="text.secondary">
-                    Price: {review.price}
-                  </Typography>
-                  <Typography variant="h6">
-                    {review.description.slice(0, 174)}
-                  </Typography>
-                  <br />
-                  <NavLink
-                    style={{ textDecoration: "none" }}
-                    to={`/details/${review._id}`}
-                  >
-                    <Button variant="contained">By Now</Button>
-                  </NavLink>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        <div className="w-50 my-5 text-center section-title mx-auto">
+          <h3>Customer Reviews</h3>
+          <p>
+            This Our Services from our valuable Customer, those who get from
+            Honda show-room. We every time provide best quality services to our
+            cusotmer.
+          </p>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            {reviews?.length === 0 ? (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            ) : (
+              <OwlCarousel
+                items={2}
+                loop={true}
+                autoplay={true}
+                dots={false}
+                margin={10}
+                nav={false}
+                className="owl-carousel"
+              >
+                {reviews?.map((review, index) => (
+                  <Review review={review} key={index}></Review>
+                ))}
+              </OwlCarousel>
+            )}
+          </div>
+        </div>
       </Container>
     </Box>
   );

@@ -1,5 +1,5 @@
-import { Alert, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
 import useAuth from "../../../hooks/useAuth";
 
 const MakeAdmin = () => {
@@ -17,7 +17,7 @@ const MakeAdmin = () => {
     e.preventDefault();
 
     const user = { email };
-    fetch("https://safe-earth-63565.herokuapp.com/users/admin", {
+    fetch("https://honda-show-room.onrender.com/users/admin", {
       method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,
@@ -37,21 +37,25 @@ const MakeAdmin = () => {
   return (
     <div>
       <h1>Make an Admin</h1>
-      <form onSubmit={handleAdminSubmit}>
-        <TextField
-          sx={{ width: "50%" }}
-          label="email"
-          type="email"
-          onBlur={handleOnBlur}
-          variant="outlined"
-        />
-        <br />
-        <br />
-        <Button type="submit" variant="contained">
-          Make Admin
-        </Button>
+      <form className="section-title mx-auto my-4" onSubmit={handleAdminSubmit}>
+        <InputGroup style={{ width: "80%", margin: "auto" }}>
+          <FormControl
+            placeholder="Email Address"
+            type="email"
+            onBlur={handleOnBlur}
+            name="email"
+          />
+          <Button className="btn btn-primary" type="submit" id="button-addon2">
+            Make Admin
+          </Button>
+        </InputGroup>
+
+        {success && (
+          <div className="alert alert-success" role="alert">
+            Made Admin Successfully!
+          </div>
+        )}
       </form>
-      {success && <Alert severity="success">Made Admin successfully</Alert>}
     </div>
   );
 };

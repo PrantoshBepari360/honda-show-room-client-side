@@ -52,8 +52,7 @@ const useFirebase = () => {
   const loginUser = (email, password, location, history) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         setAuthError("");
         const destination = location?.state?.from || "/home";
         history.replace(destination);
@@ -69,8 +68,8 @@ const useFirebase = () => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then((userCredential) => {
-        const user = userCredential.user;
-        saveUser(user.email, user.displayName, "PUT");
+        const user = userCredential?.user;
+        saveUser(user?.email, user?.displayName, "PUT");
         setAuthError("");
         const destination = location?.state?.from || "/";
         history.replace(destination);
@@ -98,10 +97,10 @@ const useFirebase = () => {
   }, [auth]);
 
   useEffect(() => {
-    fetch(`https://safe-earth-63565.herokuapp.com/users/${user.email}`)
+    fetch(`https://honda-show-room.onrender.com/users/${user?.email}`)
       .then((res) => res.json())
-      .then((data) => setAdmin(data.admin));
-  }, [user.email]);
+      .then((data) => setAdmin(data?.admin));
+  }, [user?.email]);
 
   // user logout
   const logOut = () => {
@@ -119,7 +118,7 @@ const useFirebase = () => {
   // save new user
   const saveUser = (email, displayName, method) => {
     const user = { email: email, displayName: displayName };
-    fetch("https://safe-earth-63565.herokuapp.com/users", {
+    fetch("https://honda-show-room.onrender.com/users", {
       method: method,
       headers: {
         "Content-Type": "application/json",

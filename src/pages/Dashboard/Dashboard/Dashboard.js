@@ -13,6 +13,7 @@ import { Button } from "@mui/material";
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import MyOrder from "../MyOrders/MyOrders";
+import DashboardHome from "../DashboardHome/DashboardHome";
 import Review from "../Review/Review";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import AddProduct from "../AddProduct/AddProduct";
@@ -45,6 +46,12 @@ function Dashboard(props) {
       </Link>
       <br />
       <Link style={{ textDecoration: "none" }} to={`${url}`}>
+        <Button color="inherit" style={{ marginBottom: "10px", color: "gray" }}>
+          Dashboard
+        </Button>
+      </Link>
+      <br />
+      <Link style={{ textDecoration: "none" }} to={`${url}/order`}>
         <Button color="inherit" style={{ marginBottom: "10px", color: "gray" }}>
           My Orders
         </Button>
@@ -177,6 +184,9 @@ function Dashboard(props) {
 
         <Switch>
           <Route exact path={path}>
+            <DashboardHome></DashboardHome>
+          </Route>
+          <Route path={`${path}/order`}>
             <MyOrder></MyOrder>
           </Route>
           <Route path={`${path}/review`}>

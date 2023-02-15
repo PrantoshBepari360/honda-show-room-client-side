@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Card,
   CardContent,
@@ -6,7 +7,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import Banner from "../../Home/Banner/Banner";
@@ -17,7 +17,7 @@ const Explores = () => {
   const [explores, setExplores] = useState([]);
 
   useEffect(() => {
-    fetch("https://safe-earth-63565.herokuapp.com/products")
+    fetch("https://honda-show-room.onrender.com/products")
       .then((res) => res.json())
       .then((data) => setExplores(data));
   }, []);
@@ -26,15 +26,24 @@ const Explores = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Navigation></Navigation>
       <Banner></Banner>
-      <h1>Explore</h1>
+      <Container>
+        <div className="w-50 my-5 text-center section-title mx-auto">
+          <h3>Explore Products</h3>
+          <p>
+            This product is from our valuable Customers, those who get it from
+            the Honda show-room. We every time provide the best quality Honda to
+            our customers.
+          </p>
+        </div>
+      </Container>
       <Container>
         <Grid
           container
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {explores.map((explore) => (
-            <Grid key={explore._id} item xs={4} sm={4} md={4}>
+          {explores?.map((explore, index) => (
+            <Grid key={index} item xs={4} sm={4} md={4}>
               <Card sx={{ minWidth: 230, marginTop: "20px" }}>
                 <CardContent>
                   <Typography variant="h6" color="text.secondary" gutterBottom>
@@ -44,22 +53,18 @@ const Explores = () => {
                       alt=""
                     />
                   </Typography>
-                  <Typography variant="h5" component="div">
-                    Name: {explore.name}
+                  <Typography variant="h5" className="text-start">
+                    {explore?.name}
                   </Typography>
-                  <Typography variant="h5" color="text.secondary">
-                    Price: {explore.price}
-                  </Typography>
-                  <Typography variant="h6">
-                    {explore.description.slice(0, 174)}
-                  </Typography>
-                  <br />
-                  <NavLink
-                    style={{ textDecoration: "none" }}
-                    to={`/booking/${explore._id}`}
-                  >
-                    <Button variant="contained">By Now</Button>
-                  </NavLink>
+                  <Box className="d-flex mt-2">
+                    <Typography variant="h5">Cost: {explore?.price}</Typography>
+                    <NavLink
+                      style={{ marginLeft: "auto" }}
+                      to={`/booking/${explore?._id}`}
+                    >
+                      <Button variant="contained">Read more</Button>
+                    </NavLink>
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>

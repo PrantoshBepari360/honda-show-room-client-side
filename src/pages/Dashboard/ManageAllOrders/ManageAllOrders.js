@@ -1,23 +1,13 @@
-import {
-  Button,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box } from "@mui/system";
+import { CircularProgress } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Table } from "react-bootstrap";
 import useAuth from "../../../hooks/useAuth";
 
 const ManageAllOrders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch("https://safe-earth-63565.herokuapp.com/allOrders")
+    fetch("https://honda-show-room.onrender.com/allOrders")
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);
@@ -26,15 +16,15 @@ const ManageAllOrders = () => {
 
   const handelDelete = (id) => {
     console.log(id);
-    const url = `https://safe-earth-63565.herokuapp.com/allOrders/${id}`;
+    const url = `https://honda-show-room.onrender.com/allOrders/${id}`;
     fetch(url, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.deletedCount) {
+        if (data?.deletedCount) {
           alert("seccesfully deleted");
-          const remaining = orders.filter((product) => product._id !== id);
+          const remaining = orders?.filter((product) => product?._id !== id);
           setOrders(remaining);
         }
       });
@@ -46,46 +36,41 @@ const ManageAllOrders = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1>Manage all Orders</h1>
-      <TableContainer>
-        <Table sx={{}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Products Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell align="right">Delate</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow
-                key={order._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {order.name}
-                </TableCell>
-                <TableCell>{order.email}</TableCell>
-                <TableCell>{order.products}</TableCell>
-                <TableCell>$ {order.price}</TableCell>
-                <TableCell align="right">
-                <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => handelDelete(order._id)}
+    <div>
+      <h1 className="text-center mb-4">Manage All Orders</h1>
+
+      <div style={{ width: "80%", margin: "auto" }}>
+        <Table responsive striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th className="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders?.map((order, index) => (
+              <tr key={index}>
+                <td>{order?.name}</td>
+                <td>{order?.email}</td>
+                <td>{order?.products}</td>
+                <td>{order?.price}</td>
+                <td className="text-center">
+                  <button
+                    onClick={() => handelDelete(order?._id)}
+                    className="btn text-danger"
                   >
                     Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
+                  </button>
+                </td>
+              </tr>
             ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
-    </Box>
+      </div>
+    </div>
   );
 };
 

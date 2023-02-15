@@ -1,18 +1,8 @@
-import {
-  CircularProgress,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-} from "@mui/material";
-import { Box } from "@mui/system";
+import { CircularProgress } from "@mui/material";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
@@ -21,14 +11,13 @@ const MyOrders = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`https://safe-earth-63565.herokuapp.com/orders?email=${user.email}`)
+    fetch(`https://honda-show-room.onrender.com/orders?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
   }, [user.email]);
 
   const handelDelete = (id) => {
-    const url = `https://safe-earth-63565.herokuapp.com/orders/${id}`;
-    console.log(url);
+    const url = `https://honda-show-room.onrender.com/orders/${id}`;
     fetch(url, {
       method: "DELETE",
     })
@@ -49,57 +38,58 @@ const MyOrders = () => {
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h2>My Orders</h2>
-      <TableContainer component={Paper}>
-        <Table sx={{}} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Products Name</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell >Pay</TableCell>
-              <TableCell>Cancel</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow
-                key={order._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {order.name}
-                </TableCell>
-                <TableCell>{order.email}</TableCell>
-                <TableCell>{order.products}</TableCell>
-                <TableCell>$ {order.price}</TableCell>
-                
-                <TableCell >
+    <div>
+      <h1 className="text-center mb-4">My Order</h1>
+      <div style={{ width: "80%", margin: "auto" }}>
+        <Table responsive striped bordered hover>
+          <thead>
+            <tr>
+              <th>Product Photo</th>
+              <th>Product Name</th>
+              <th className="text-center">Price</th>
+              <th className="text-center">Payment</th>
+              <th className="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders?.map((order, index) => (
+              <tr key={index}>
+                <td>
+                  <img
+                    style={{ width: "100px" }}
+                    src={order?.img}
+                    alt="product"
+                  />
+                </td>
+                <td>{order?.products}</td>
+                <td className="text-center">{order?.price}</td>
+                <td className="text-center">
                   {order.payment ? (
-                    "paid"
+                    <button className="fw-bold btn btn-success">Paid</button>
                   ) : (
                     <Link to={`/dashboard/payment/${order._id}`}>
-                      <button>Pay</button>
+                      <button className="fw-bold btn btn-primary">Pay</button>
                     </Link>
                   )}
-                </TableCell>
-                <TableCell>
-                {order.payment ? (
-                  ""
-                   ) : (<Button
-                    onClick={() => handelDelete(order._id)}
-                  >
-                    Cancel
-                  </Button>)}
-                  </TableCell>
-              </TableRow>
+                </td>
+                <td className="text-center">
+                  {order.payment ? (
+                    <h5 className="text-success">Panding...</h5>
+                  ) : (
+                    <button
+                      onClick={() => handelDelete(order?._id)}
+                      className="btn text-danger"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </td>
+              </tr>
             ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
-    </Box>
+      </div>
+    </div>
   );
 };
 

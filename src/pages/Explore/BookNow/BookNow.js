@@ -12,17 +12,14 @@ import { useState } from "react";
 
 const BookNow = () => {
   const { Id } = useParams();
-  console.log(Id)
   const location = useLocation();
   const history = useHistory();
   const redirect_uri = location.state?.from || "/home";
 
   const [products, setProducts] = useState([]);
-  console.log(products)
-
 
   useEffect(() => {
-    fetch(`https://safe-earth-63565.herokuapp.com/products/${Id}`)
+    fetch(`https://honda-show-room.onrender.com/products/${Id}`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, [Id]);
@@ -35,9 +32,9 @@ const BookNow = () => {
   } = useForm();
 
   const { user } = useAuth();
-  
+
   const Submit = (data) => {
-    fetch("https://safe-earth-63565.herokuapp.com/orders", {
+    fetch("https://honda-show-room.onrender.com/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -58,16 +55,29 @@ const BookNow = () => {
     <div>
       <form className="honda-form" onSubmit={handleSubmit(Submit)}>
         <Box className="honda">
-          <input defaultValue={user.displayName} {...register("name")} />
+          <input defaultValue={user?.displayName} {...register("name")} />
           <input
-            defaultValue={user.email}
+            defaultValue={user?.email}
             {...register("email", { required: true })}
           />
-          {errors.email && (
+          {errors?.email && (
             <span className="error">This field is required</span>
           )}
-          <input placeholder="name" defaultValue={products.name} {...register("products")} />
-          <input placeholder="price" defaultValue={products.price} {...register("price")} />
+          <input
+            placeholder="name"
+            defaultValue={products?.name}
+            {...register("products")}
+          />
+          <input
+            placeholder="price"
+            defaultValue={products?.price}
+            {...register("price")}
+          />
+          <input
+            placeholder="img"
+            defaultValue={products?.img}
+            {...register("img")}
+          />
           <input
             placeholder="Address"
             defaultValue=""

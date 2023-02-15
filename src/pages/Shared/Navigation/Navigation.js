@@ -45,7 +45,8 @@ const Navigation = () => {
     },
   });
 
-  const { navItem, navIcon, navItemContainer, navLogo, mobileNavItem } = useStyle();
+  const { navItem, navIcon, navItemContainer, navLogo, mobileNavItem } =
+    useStyle();
 
   const [state, setState] = React.useState(false);
 
@@ -55,6 +56,13 @@ const Navigation = () => {
         <ListItem button>
           <ListItemText>
             <Link className={mobileNavItem} to="/">
+              Home
+            </Link>
+          </ListItemText>
+        </ListItem>
+        <ListItem button>
+          <ListItemText>
+            <Link className={mobileNavItem} to="/product">
               PRODUCTS
             </Link>
           </ListItemText>
@@ -106,7 +114,7 @@ const Navigation = () => {
               className={navLogo}
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 0.5 }}
             >
               <img
                 src="https://global.yamaha-motor.com/shared/img/rwd_identity.png"
@@ -115,6 +123,9 @@ const Navigation = () => {
             </Typography>
             <Box className={navItemContainer}>
               <NavLink className={navItem} to="/">
+                <Button color="inherit">Home</Button>
+              </NavLink>
+              <NavLink className={navItem} to="/product">
                 <Button color="inherit">Products</Button>
               </NavLink>
               <NavLink className={navItem} to="/explore">
